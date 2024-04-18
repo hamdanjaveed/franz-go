@@ -121,7 +121,7 @@ func (c *testConsumer) etl(etlsBeforeQuit int) {
 		WithLogger(testLogger()),
 		ConsumerGroup(c.group),
 		ConsumeTopics(c.consumeFrom),
-		Balancers(c.balancer),
+		Balancers(c.balancers...),
 		MaxBufferedRecords(10000),
 		MaxBufferedBytes(50000),
 		ConsumePreferringLagFn(PreferLagAt(1)),

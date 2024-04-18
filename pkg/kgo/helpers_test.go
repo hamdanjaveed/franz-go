@@ -26,7 +26,7 @@ import (
 
 var (
 	adm             *Client
-	testrf          = 3
+	testrf          = 1
 	testRecordLimit = 500000
 
 	// Kraft sometimes has massive hangs internally when completing
@@ -327,8 +327,8 @@ type testConsumer struct {
 	consumeFrom string
 	produceTo   string
 
-	group    string
-	balancer GroupBalancer
+	group     string
+	balancers []GroupBalancer
 
 	expBody []byte // what every record body should be
 
@@ -355,7 +355,7 @@ func newTestConsumer(
 	consumeFrom string,
 	produceTo string,
 	group string,
-	balancer GroupBalancer,
+	balancers []GroupBalancer,
 	expBody []byte,
 ) *testConsumer {
 	return &testConsumer{
@@ -364,8 +364,8 @@ func newTestConsumer(
 		consumeFrom: consumeFrom,
 		produceTo:   produceTo,
 
-		group:    group,
-		balancer: balancer,
+		group:     group,
+		balancers: balancers,
 
 		expBody: expBody,
 
@@ -407,7 +407,7 @@ func testChainETL(
 			topic1,
 			topic2,
 			group1,
-			balancer,
+			[]GroupBalancer{balancer},
 			body,
 		)
 
@@ -423,7 +423,7 @@ func testChainETL(
 			topic2,
 			topic3,
 			group2,
-			balancer,
+			[]GroupBalancer{balancer},
 			body,
 		)
 
@@ -439,7 +439,7 @@ func testChainETL(
 			topic3,
 			topic4,
 			group3,
-			balancer,
+			[]GroupBalancer{balancer},
 			body,
 		)
 	)

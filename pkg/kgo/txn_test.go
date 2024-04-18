@@ -152,7 +152,7 @@ func (c *testConsumer) transact(txnsBeforeQuit int) {
 		ConsumerGroup(c.group),
 		ConsumeTopics(c.consumeFrom),
 		FetchIsolationLevel(ReadCommitted()),
-		Balancers(c.balancer),
+		Balancers(c.balancers...),
 		MaxBufferedRecords(10000),
 	}
 	if requireStableFetch {
